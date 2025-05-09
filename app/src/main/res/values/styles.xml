@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="supra_telet">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="verify_your_number">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="enter_the_otp">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#D9D9D9</item>
+    </style>
+
+    <style name="help">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="resend_otp">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="create_account">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="description">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#99FFFFFF</item>
+    </style>
+
+    <style name="floatingHint"> <item name="android:textColorHint"> @color/hint</item> </style>
+</resources>

@@ -1,0 +1,200 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient_inverse">
+
+    <!-- Logo and App Name -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="50dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/suprajit_logo_white" />
+
+        <TextView
+            android:id="@+id/supra_telet"
+            android:layout_width="wrap_content"
+            android:layout_height="33sp"
+            android:layout_marginStart="16dp"
+            android:text="@string/supra_telet"
+            android:fontFamily="@font/roboto_bold"
+            android:textAppearance="@style/supra_telet"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_section"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/otp_inner_gradient">
+
+        <TextView
+            android:id="@+id/verify_your_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verify_your"
+            android:layout_gravity="top"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginStart="50dp"
+            android:textAppearance="@style/verify_your_number" />
+        <TextView
+            android:id="@+id/enter_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_the_otp"
+            android:layout_gravity="top"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginStart="50dp"
+            android:textAppearance="@style/enter_the_otp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/otp_1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/otp_verify_boxes"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/otp_2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/otp_verify_boxes"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/otp_3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/otp_verify_boxes"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/otp_4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/otp_verify_boxes"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/otp_5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/otp_verify_boxes"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/otp_6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/otp_verify_boxes"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/verify_button"
+            android:layout_width="349dp"
+            android:layout_height="49dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_background_halfwhite"
+            android:clickable="true"
+            android:focusable="true"
+            android:textStyle="bold"
+            android:text="Verify" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/verify_button_clickable"
+            android:layout_width="349dp"
+            android:layout_height="49dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            android:background="@drawable/button_background_white"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Verify" />
+
+        <TextView
+            android:id="@+id/help"
+            android:layout_width="237dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/help"
+            android:textAppearance="@style/help"
+            android:gravity="top"
+            />
+
+        <TextView
+            android:id="@+id/resend_otp"
+            android:layout_width="159dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:text="@string/resend_otp"
+            android:textAppearance="@style/resend_otp"
+            android:gravity="top"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
