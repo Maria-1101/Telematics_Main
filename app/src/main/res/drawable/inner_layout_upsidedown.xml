@@ -6,7 +6,7 @@
         android:centerColor="@color/main_colour"
         android:endColor="@color/black"
         android:angle="90"
-        android:centerY="1"
+        android:centerY="0.5"
         android:useLevel="false" />
 
     <corners

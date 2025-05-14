@@ -22,23 +22,25 @@ class LoginOrRegistration : AppCompatActivity() {
         }
         enableEdgeToEdge()
         setContentView(R.layout.activity_login_or_registration)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        registerButton.findViewById<Button>(R.id.registration_button)
+
+        registerButton = findViewById(R.id.registration_button)
 
         val loginButton = findViewById<Button>(R.id.login_button)
+
         loginButton.setOnClickListener {
-            val intent = Intent(this,LoginPage::class.java)
+            val intent = Intent(this, LoginPage::class.java)
             startActivity(intent)
         }
 
         registerButton.setOnClickListener {
-            val Intent =  Intent(this,RegistrationPage::class.java)
+            val intent = Intent(this, RegistrationPage::class.java)
             startActivity(intent)
         }
-
     }
 }

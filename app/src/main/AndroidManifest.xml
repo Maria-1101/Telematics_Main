@@ -13,10 +13,23 @@
         android:theme="@style/Theme.NTele"
         tools:targetApi="31">
         <activity
+            android:name=".UserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".OTPVerificationPage"
+            android:exported="false" />
+        <activity
             android:name=".RegistrationPage"
             android:exported="false" />
         <activity
             android:name=".LoginOrRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".LoginPage"
+            android:exported="false" />
+
+        <activity
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,17 +38,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginPage"
-            android:exported="false"></activity>
-        <activity
-            android:name=".Registration_UserDetailsPage"
-            android:exported="false"></activity>
-        <activity
-            android:name=".SplashActivity"
-            android:exported="false"></activity>
-        <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

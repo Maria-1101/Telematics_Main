@@ -22,6 +22,9 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 hbb20-ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version = "22.3.1" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version = "21.1.0" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

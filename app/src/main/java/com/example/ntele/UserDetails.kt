@@ -2,18 +2,21 @@ package com.example.ntele
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
-class Registration_UserDetailsPage : AppCompatActivity() {
+class UserDetails : AppCompatActivity() {
     private lateinit var dobInput: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.user_details)
+        setContentView(R.layout.activity_user_details)
 
-        dobInput = findViewById(R.id.dob_input_layout)
+        dobInput = findViewById(R.id.dob_input)  // <- Correct ID of the EditText
 
         dobInput.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -30,10 +33,16 @@ class Registration_UserDetailsPage : AppCompatActivity() {
                 year, month, day
             )
 
-            // Optional: Restrict future dates
             datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-
             datePickerDialog.show()
         }
+        val genderInput: MaterialAutoCompleteTextView = findViewById(R.id.gender_input)
+
+        // Gender options to display in the dropdown
+        val genderOptions = resources.getStringArray(R.array.gender_options)
+
+        // Setting the adapter to the MaterialAutoCompleteTextView
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, genderOptions)
+        genderInput.setAdapter(adapter)
     }
 }

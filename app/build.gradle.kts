@@ -53,5 +53,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation (libs.com.google.android.material)
     implementation(libs.hbb20.ccp)
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+
 
 }

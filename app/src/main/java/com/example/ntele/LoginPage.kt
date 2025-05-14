@@ -1,8 +1,10 @@
 package com.example.ntele
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,24 +16,31 @@ import com.hbb20.CountryCodePicker
 class LoginPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_page) // First, call setContentView
+        setContentView(R.layout.activity_login_page)
 
         enableEdgeToEdge()
 
+        try {
+            val ccp = findViewById<CountryCodePicker>(R.id.countryCodePicker)
+            val phoneEditText = findViewById<EditText>(R.id.editTextPhone)
+            val sendOtpButton = findViewById<Button>(R.id.send_otp_btn)
 
+            sendOtpButton.setOnClickListener {
+                val phoneNumber = phoneEditText.text.toString().trim()
 
-        // Now access the CountryCodePicker after the view is set
-        val ccp = findViewById<CountryCodePicker>(R.id.countryCodePicker)
-        val phoneEditText = findViewById<EditText>(R.id.editTextPhone)
+                if (phoneNumber.isEmpty()) {
+                    phoneEditText.error = "Please enter phone number"
+                    return@setOnClickListener
+                }
 
-        // Retrieve the full phone number with country code
-        val fullPhoneNumber = "+${ccp.selectedCountryCode}${phoneEditText.text}"
+                val fullPhoneNumber = "+${ccp.selectedCountryCode}$phoneNumber"
 
-        // Apply window insets for edge-to-edge support
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+                val intent = Intent(this, OTPVerificationPage::class.java)
+                intent.putExtra("fullPhoneNumber", fullPhoneNumber)
+                startActivity(intent)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

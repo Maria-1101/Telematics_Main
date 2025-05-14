@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -54,11 +55,17 @@ class SplashActivity : AppCompatActivity() {
             logo.startAnimation(zoomIn)
             appName.startAnimation(zoomIn)
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(this@SplashActivity, LoginOrRegistration::class.java)
-                startActivity(intent)
-                finish() // closes SplashActivity so it can't be returned to
-            }, 1000) // delay slightly to let zoom-in play
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        try {
+                            val intent = Intent(this@SplashActivity, LoginOrRegistration::class.java)
+                            startActivity(intent)
+                            finish()
+                        } catch (e: Exception) {
+                            Log.e("new", "Navigation to LoginOrRegistration failed", e)
+                        }
+                    }, 1000)
+
+            // delay slightly to let zoom-in play
 
         }, 1600)
     }

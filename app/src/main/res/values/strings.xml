@@ -3,8 +3,8 @@
     <string name="supra_telet">Supra Teletrack</string>
     <string name="verify_your">Verify your number</string>
     <string name="enter_the_otp">Enter the OTP sent to +91 9785463285</string>
-    <string name="help">Having trouble? Request new OTP in 00:24</string>
-    <string name="resend_otp">Having trouble? Resend OTP</string>
+    <string name="help">Having trouble? Request new OTP in</string>
+    <string name="resend_otp">Resend OTP</string>
     <string name="create_account">Create Account</string>
     <string name="description">Your all-in-one app, bringing cluster data to your fingertips.</string>
     <string name="back_button_description">back button\n</string>
@@ -13,6 +13,12 @@
     <string name="your_all_in_one_app_bringing_cluster">Your all-in-one app, bringing cluster</string>
     <string name="data_to_your_fingertips">data to your fingertips</string>
     <string name="register">Register</string>
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
 
 
 </resources>
