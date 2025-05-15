@@ -55,7 +55,7 @@
             android:id="@+id/verify_your_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mobile_number_verification"
+            android:text="@string/email_id_verification"
             android:layout_marginStart="50dp"
             android:fontFamily="@font/roboto_regular"
             android:textAppearance="@style/verify_your_number" />
@@ -79,7 +79,7 @@
                 android:id="@+id/email_id_to_veify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="+91 9764835678"
+                android:hint="xyz@gmail.com"
                 android:textColorHint="@color/hint"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/roboto_regular"

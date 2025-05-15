@@ -10,6 +10,7 @@ material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
 ccp = "2.5.0"
+bottom_nav = "0.1.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -24,6 +25,7 @@ com-google-android-material = { module = "com.google.android.material:material",
 hbb20-ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version = "22.3.1" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version = "21.1.0" }
+curvedbottomNavigation = { group = "com.github.qamarelsafadi" ,  name = "CurvedBottomNavigation" , version.ref = "bottom_nav"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -37,7 +38,15 @@ class LoginPage : AppCompatActivity() {
 
                 val intent = Intent(this, OTPVerificationPage::class.java)
                 intent.putExtra("fullPhoneNumber", fullPhoneNumber)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
+            }
+
+            val registration_link = findViewById<TextView>(R.id.new_user_register)
+            registration_link.setOnClickListener{
+                val i = Intent(this, RegistrationPage::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
             }
         } catch (e: Exception) {
             e.printStackTrace()
