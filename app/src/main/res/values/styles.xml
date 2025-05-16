@@ -46,5 +46,18 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="floatingHint"> <item name="android:textColorHint"> @color/hint</item> </style>
+    <style name="name">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="floatingHint">
+        <item name="android:textColorHint"> @color/hint</item>
+    </style>
+
+    <style name="RoundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
 </resources>

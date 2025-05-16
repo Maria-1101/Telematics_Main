@@ -56,5 +56,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
     implementation(libs.curvedbottomNavigation)
+    implementation(libs.glide)
+    implementation(libs.serviceLocation)
 
 }

@@ -3,51 +3,34 @@ package com.example.ntele
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.ntele.databinding.ActivityBottomNavigationDrawerBinding
 import com.example.ntele.fragments.HomeFragment
 import com.example.ntele.fragments.ServiceFragment
 import com.example.ntele.fragments.VehicleFragment
-import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
-
 
 class BottomNavigationDrawer : AppCompatActivity() {
 
+    private lateinit var binding: ActivityBottomNavigationDrawerBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bottom_navigation_drawer)
+        binding = ActivityBottomNavigationDrawerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val bottomNavigation = findViewById<CurvedBottomNavigation>(R.id.bottomNavigation)
+        // Default Fragment
+        replaceFragment(HomeFragment())
 
-        bottomNavigation.add(
-            CurvedBottomNavigation.Model(1, "Service", R.drawable.service_icon)
-        )
-        bottomNavigation.add(
-            CurvedBottomNavigation.Model(2, "Home", R.drawable.home)
-        )
-        bottomNavigation.add(
-            CurvedBottomNavigation.Model(3, "My Vehicle", R.drawable.my_vehicle)
-        )
-        bottomNavigation.setOnClickMenuListener {
-            when (it.id) {
-                1 -> {
-                    replaceFragment(ServiceFragment())
-                }
-                2 -> {
-                    replaceFragment(HomeFragment())
-                }
-                3 -> {
-                    replaceFragment(VehicleFragment())
-                }
+        binding.customNav.setOnItemSelectedListener { index ->
+            when (index) {
+                0 -> replaceFragment(HomeFragment())
+                1 -> replaceFragment(VehicleFragment())
+                2 -> replaceFragment(ServiceFragment())
             }
         }
-        //default screen selected
-        replaceFragment(HomeFragment())
-        bottomNavigation.show(2)
     }
-
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentContainer,fragment)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
             .commit()
     }
 }
