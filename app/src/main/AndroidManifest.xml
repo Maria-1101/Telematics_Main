@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NTele"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.mappls.sdk.maps.ACCESS_TOKEN"
+            android:value="20b2c7a2d61fa8e3c0f04cc4c3f5cbb3" />
+
 
         <activity
             android:name=".BottomNavigationDrawer"

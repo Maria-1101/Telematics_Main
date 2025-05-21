@@ -21,7 +21,32 @@
     </string-array>
     <string name="register_link_text"><u>New user? Register here</u></string>
     <string name="login_link_text"><u>Already have an account? Login here</u></string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="battery_level_title">Battery Level</string>
+    <string name="Current_Location">Current Location</string>
+    <string name="battery_level_detection">65%</string>
+    <string name="progress_end">100%</string>
+    <string name="progress_start">0%</string>
+    <string name="cubbon_park">Cubbon Park</string>
+    <string name="parked_status">Parked for 2h 20m</string>
+    <string name="mileage">Mileage</string>
+    <string name="co2_saved">CO2 Saved</string>
+    <string name="total_distance">Total Distance</string>
+    <string name="avg_speed">Avg Speed</string>
+    <string name="seat_lock">Seat lock</string>
+    <string name="vehicle_lock">Vehicle lock</string>
+    <string name="handle_lock">Handle lock</string>
+    <string name="immobilization">Immobilization</string>
+    <string name="premium_subscription">Premium subscription</string>
+    <string name="sos_alert">Auto-alert contacts in case of an emergency</string>
+    <string name="my_vehicle">My Vehicle</string>
+    <string name="trip_history">Trip history</string>
+    <string name="alert_settings">Alert Settings</string>
+    <string name="driver_analytics">Driver analytics</string>
+    <string name="about_vehicle">About Vehicle</string>
+    <string name="tpms">TPMS</string>
+    <string name="notification">Notifications</string>
+    <string name="events_log">Events Log</string>
+    <string name="last_travel">Last Travelled on</string>
 
 </resources>

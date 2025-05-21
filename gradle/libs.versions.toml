@@ -13,6 +13,9 @@ ccp = "2.5.0"
 bottom_nav = "0.1.3"
 glide_ref = "4.16.0"
 location = "21.0.1"
+firebaseAuth = "22.3.1"
+playServicesAuth = "21.1.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,8 +28,8 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 hbb20-ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version = "22.3.1" }
-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version = "21.1.0" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 curvedbottomNavigation = { group = "com.github.qamarelsafadi" ,  name = "CurvedBottomNavigation" , version.ref = "bottom_nav"}
 glide = {group = "com.github.bumptech.glide" , name = "glide" , version.ref = "glide_ref"}
 serviceLocation = { group = "com.google.android.gms" , name = "play-services-location" ,version.ref = "location"}
