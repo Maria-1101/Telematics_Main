@@ -3,6 +3,7 @@ package com.example.ntele
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -25,13 +26,30 @@ class CustomCurvedNavigation @JvmOverloads constructor(
     )
     private val labels = listOf("Home", "My Vehicle", "Service")
 
-    private val outerCircleRadius = 60f  // Larger for floating effect
-    private val innerCircleRadius = 50f
-    private val curveDepth = 40f
-    private val navBarHeight = 130f  // total nav bar height
+    // Convert dp to px
+    private fun dpToPx(dp: Float): Float =
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
+
+    // Use dp units for consistent UI
+    private val outerCircleRadius = dpToPx(30f)
+    private val innerCircleRadius = dpToPx(25f)
+    private val curveDepth = dpToPx(20f)
+    private val navBarHeight = dpToPx(65f)
+    private val iconSize = dpToPx(30f)
+    private val textSizeSelected = dpToPx(14f)
+    private val textSizeUnselected = dpToPx(12f)
+    private val cornerRadius = dpToPx(60f)
 
     fun setOnItemSelectedListener(callback: (Int) -> Unit) {
         onItemSelected = callback
+    }
+
+    fun setSelectedItem(index: Int) {
+        if (index in 0 until itemCount && index != selectedIndex) {
+            selectedIndex = index
+            invalidate()
+            onItemSelected?.invoke(index)
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -40,23 +58,26 @@ class CustomCurvedNavigation @JvmOverloads constructor(
         val widthPerItem = width / itemCount.toFloat()
         val selectedCenterX = selectedIndex * widthPerItem + widthPerItem / 2
 
-        val bottomY = height.toFloat()               // bottom of the view
-        val topY = bottomY - navBarHeight            // top of nav bar area
+        val bottomY = height.toFloat()
+        val topY = bottomY - navBarHeight
 
-
-        // Draw nav bar background path
         path.reset()
-
-        val cornerRadius = 40f  // Changed from 50f to 20f
-
         val curveStart = selectedCenterX - outerCircleRadius
         val curveEnd = selectedCenterX + outerCircleRadius
 
-        path.moveTo(0f, bottomY) // Start from bottom-left corner
-        path.lineTo(0f, topY + cornerRadius) // Draw line up to top-left corner curve start
-        path.quadTo(0f, topY, cornerRadius, topY) // Top-left corner curve
-        path.lineTo(curveStart, topY) // Line to start of floating bump
-// Floating bump curves
+        // Start from bottom-left
+        path.moveTo(0f, bottomY)
+
+        // Left vertical line
+        path.lineTo(0f, topY + cornerRadius)
+
+        // Top-left corner curve
+        path.quadTo(0f, topY, cornerRadius, topY)
+
+        // Line to start of curve under selected item
+        path.lineTo(curveStart, topY)
+
+        // Floating curve under selected item
         path.cubicTo(
             curveStart + outerCircleRadius / 2, topY,
             selectedCenterX - outerCircleRadius / 2, topY - curveDepth,
@@ -68,75 +89,73 @@ class CustomCurvedNavigation @JvmOverloads constructor(
             curveEnd, topY
         )
 
-        path.lineTo(width - cornerRadius, topY) // Line to top-right corner curve start
-        path.quadTo(width.toFloat(), topY, width.toFloat(), topY + cornerRadius) // Top-right corner curve
-        path.lineTo(width.toFloat(), bottomY) // Line down to bottom-right corner
+        // Line to top-right corner
+        path.lineTo(width - cornerRadius, topY)
 
-// Line along bottom edge to bottom-left corner
+        // Top-right corner curve
+        path.quadTo(width.toFloat(), topY, width.toFloat(), topY + cornerRadius)
+
+        // Right vertical line
+        path.lineTo(width.toFloat(), bottomY)
+
+        // Bottom line
         path.lineTo(0f, bottomY)
-
         path.close()
-
 
         // Draw background
         paint.color = Color.WHITE
         canvas.drawPath(path, paint)
 
-        // Draw items
+        // Draw icons and labels
         for (i in 0 until itemCount) {
             val cx = i * widthPerItem + widthPerItem / 2
             val isSelected = i == selectedIndex
 
             if (isSelected) {
-                // Floating circle Y position above nav bar top line
-                // For selected item floating circle Y position on topY line
                 val circleY = topY
 
-// Outer circle
+                // Outer circle
                 paint.color = ContextCompat.getColor(context, R.color.main_colour)
                 canvas.drawCircle(cx, circleY, outerCircleRadius, paint)
 
-// Inner circle
+                // Inner circle
                 paint.color = Color.WHITE
                 canvas.drawCircle(cx, circleY, innerCircleRadius, paint)
-
-// Icon in center of circle
-                val icon = ContextCompat.getDrawable(context, icons[i])
-                icon?.setBounds(
-                    (cx - 30).toInt(),
-                    (circleY - 30).toInt(),
-                    (cx + 30).toInt(),
-                    (circleY + 30).toInt()
-                )
-                icon?.draw(canvas)
-
-
-                // Label under nav bar inside navBarHeight area
-                paint.color = Color.BLACK
-                paint.textSize = 28f
-                paint.textAlign = Paint.Align.CENTER
-                // Place label around the vertical center of nav bar plus some offset
-                canvas.drawText(labels[i], cx, topY + navBarHeight / 2 + 40f, paint)
-
-            } else {
-                // Unselected icon Y inside nav bar
-                val iconY = topY + navBarHeight / 2 - 20f
 
                 // Icon
                 val icon = ContextCompat.getDrawable(context, icons[i])
                 icon?.setBounds(
-                    (cx - 25).toInt(),
-                    (iconY - 25).toInt(),
-                    (cx + 25).toInt(),
-                    (iconY + 25).toInt()
+                    (cx - iconSize / 2).toInt(),
+                    (circleY - iconSize / 2).toInt(),
+                    (cx + iconSize / 2).toInt(),
+                    (circleY + iconSize / 2).toInt()
                 )
                 icon?.draw(canvas)
 
                 // Label
                 paint.color = Color.BLACK
-                paint.textSize = 24f
+                paint.textSize = textSizeSelected
                 paint.textAlign = Paint.Align.CENTER
-                canvas.drawText(labels[i], cx, iconY + 50f, paint)
+                canvas.drawText(labels[i], cx, topY + navBarHeight / 2 + dpToPx(20f), paint)
+
+            } else {
+                val iconY = topY + navBarHeight / 2 - dpToPx(10f)
+
+                // Icon
+                val icon = ContextCompat.getDrawable(context, icons[i])
+                icon?.setBounds(
+                    (cx - iconSize / 2).toInt(),
+                    (iconY - iconSize / 2).toInt(),
+                    (cx + iconSize / 2).toInt(),
+                    (iconY + iconSize / 2).toInt()
+                )
+                icon?.draw(canvas)
+
+                // Label
+                paint.color = Color.BLACK
+                paint.textSize = textSizeUnselected
+                paint.textAlign = Paint.Align.CENTER
+                canvas.drawText(labels[i], cx, iconY + iconSize / 2 + dpToPx(16f), paint)
             }
         }
     }

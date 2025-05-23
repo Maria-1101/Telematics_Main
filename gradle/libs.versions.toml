@@ -17,6 +17,7 @@ firebaseAuth = "22.3.1"
 playServicesAuth = "21.1.0"
 
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

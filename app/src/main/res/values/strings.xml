@@ -45,8 +45,21 @@
     <string name="driver_analytics">Driver analytics</string>
     <string name="about_vehicle">About Vehicle</string>
     <string name="tpms">TPMS</string>
-    <string name="notification">Notifications</string>
+    <string name="notification">Notification</string>
     <string name="events_log">Events Log</string>
     <string name="last_travel">Last Travelled on</string>
+    <string name="alert_setting_page_title">Alert Settings</string>
+    <string name="speed_alert">Speed alert</string>
+    <string name="soc_alert">SOC alert</string>
+    <string name="contacts">Emergency contacts</string>
+    <string name="geofence">Geofence alert</string>
+    <string name="time_fence">Time fence alert</string>
+    <string name="speed_alert_hint">50 km/h</string>
+    <string name="time_fence_alert">Time fence alert</string>
+    <string name="time_fence_hint">1:00 am - 4:00 pm</string>
+    <string name="contacts_hint">3 contacts added</string>
+    <string name="soc_hint">50%</string>
+    <string name="suprateletrack">Supra Teletrack</string>
+
 
 </resources>

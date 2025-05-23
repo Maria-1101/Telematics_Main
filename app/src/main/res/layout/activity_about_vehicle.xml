@@ -32,7 +32,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/supra_telet"
             android:fontFamily="@font/roboto_bold"
-            android:textAppearance="@style/supra_telet"
+            android:textAppearance="@style/header_title"
             android:gravity="center_vertical" />
     </LinearLayout>
     <LinearLayout

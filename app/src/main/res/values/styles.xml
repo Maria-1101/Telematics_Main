@@ -129,4 +129,21 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
+
+    <style name="alert_setting_page_title">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="alert_settings_parameters_title">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#C4CBD4</item>
+    </style>
+
+    <style name="alert_settings_fetched_value_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
 </resources>

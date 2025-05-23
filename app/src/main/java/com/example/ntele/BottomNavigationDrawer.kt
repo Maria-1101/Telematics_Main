@@ -17,9 +17,25 @@ class BottomNavigationDrawer : AppCompatActivity() {
         binding = ActivityBottomNavigationDrawerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Default Fragment
-        replaceFragment(HomeFragment())
+        // Check for fragment to open from Intent
+        val fragmentToOpen = intent.getStringExtra("openFragment")?: "home"
 
+        when (fragmentToOpen) {
+            "vehicle" -> {
+                replaceFragment(VehicleFragment())
+                binding.customNav.setSelectedItem(1)
+            }
+            "service" -> {
+                replaceFragment(ServiceFragment())
+                binding.customNav.setSelectedItem(2)
+            }
+            else -> {
+                replaceFragment(HomeFragment())
+                binding.customNav.setSelectedItem(0)
+            }
+        }
+
+        // Bottom nav bar item selection
         binding.customNav.setOnItemSelectedListener { index ->
             when (index) {
                 0 -> replaceFragment(HomeFragment())
@@ -28,9 +44,11 @@ class BottomNavigationDrawer : AppCompatActivity() {
             }
         }
     }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
     }
+
 }
