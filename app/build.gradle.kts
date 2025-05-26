@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
-
 android {
     namespace = "com.example.ntele"
     compileSdk = 35
@@ -51,7 +51,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.com.google.android.material)
     implementation(libs.hbb20.ccp)
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
@@ -59,3 +58,4 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.serviceLocation)
 }
+

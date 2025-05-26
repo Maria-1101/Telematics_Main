@@ -1,6 +1,6 @@
 [versions]
 agp = "8.8.0"
-kotlin = "1.9.24"
+kotlin = "2.1.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -15,6 +15,7 @@ glide_ref = "4.16.0"
 location = "21.0.1"
 firebaseAuth = "22.3.1"
 playServicesAuth = "21.1.0"
+service = "4.4.2"
 
 
 
@@ -27,7 +28,6 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-com-google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 hbb20-ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
@@ -38,4 +38,6 @@ serviceLocation = { group = "com.google.android.gms" , name = "play-services-loc
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "service" }
+
 

@@ -71,31 +71,37 @@
             android:text="@string/description"
             android:textAppearance="@style/description" />
 
-        <LinearLayout
-            android:id="@+id/mobile_phone_layout"
-            android:layout_width="360dp"
+        <FrameLayout
+            android:id="@+id/phone_input_frame"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:orientation="vertical"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:background="@drawable/rounded_edittext_bg">
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp">
 
             <LinearLayout
-                android:layout_width="300dp"
+                android:id="@+id/mobile_phone_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:background="@drawable/login_mobile_number_stroke"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:paddingBottom="20dp"
+                android:background="@drawable/rounded_edittext_bg">
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:background="@drawable/login_mobile_number_stroke"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:gravity="center_vertical">
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/countryCodePicker"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     app:ccp_showFlag="false"
                     app:ccp_autoDetectCountry="true"
                     app:ccp_defaultNameCode="IN"
@@ -111,45 +117,49 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/phone_input_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:hint="Mobile Number"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:hint="Mobile Number"
                     android:textColorHint="@color/hint"
                     app:boxBackgroundMode="none"
                     app:hintAnimationEnabled="true"
                     app:hintTextAppearance="@style/HintTextStyle">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextPhone"
+                        android:id="@+id/mobile_num_edittext"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:inputType="phone"
                         android:paddingStart="12dp"
-                        android:paddingTop="14dp"
-                        android:paddingBottom="10dp"
+                        android:paddingTop="0dp"
                         android:paddingEnd="12dp"
+                        android:paddingBottom="0dp"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/send_otp_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:text="Send OTP"
-                android:textStyle="normal"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:background="@drawable/button_gradient"
-                android:clickable="true"
-                android:focusable="true" />
-        </LinearLayout>
+
+        <Button
+                    android:id="@+id/send_otp_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:text="Send OTP"
+                    android:textStyle="normal"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:background="@drawable/button_gradient"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+        </FrameLayout>
+
     </LinearLayout>
 
     <!-- Centered below the inner_section -->
