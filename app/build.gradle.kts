@@ -57,5 +57,6 @@ dependencies {
     implementation(libs.curvedbottomNavigation)
     implementation(libs.glide)
     implementation(libs.serviceLocation)
+    implementation(libs.androidVolley)
 }
 
