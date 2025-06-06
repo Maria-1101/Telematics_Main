@@ -175,6 +175,12 @@ class EmailOTPVerification : AppCompatActivity() {
                     if (response.isSuccessful) {
                         Toast.makeText(this@EmailOTPVerification, "Email verified!", Toast.LENGTH_SHORT).show()
 
+                        val preferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+                        preferences.edit()
+                            .putBoolean("isLoggedIn" , true)
+                            .putString("username", fullName)
+                            .apply()
+
                         if(source == "registration") {
                             val intent = Intent(this@EmailOTPVerification, UserDetails::class.java)
                             intent.putExtra("verifiedEmail", email)

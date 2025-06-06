@@ -148,6 +148,10 @@ class LoginPage : AppCompatActivity() {
                 intent.putExtra("phoneNumber", phoneNumber)
                 intent.putExtra("name", name)
                 intent.putExtra("source","login")
+
+                val preferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+                preferences.edit().putBoolean("isLoggedIn",true).apply()
+
                 startActivity(intent)
             },
             Response.ErrorListener { error ->
@@ -179,6 +183,10 @@ class LoginPage : AppCompatActivity() {
                     intent.putExtra("name", name)
                     Log.d("name Registration","" + name)
                     intent.putExtra("source","login")
+
+                    val preferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+                    preferences.edit().putBoolean("isLoggedIn",true).apply()
+
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Failed to send Email OTP", Toast.LENGTH_SHORT).show()

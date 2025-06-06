@@ -17,6 +17,17 @@ class LoginOrRegistration : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val prefs = getSharedPreferences("UserSession", MODE_PRIVATE)
+        val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
+
+        if (isLoggedIn) {
+            val userName = prefs.getString("userName", "User") // Fallback name
+            val intent = Intent(this, BottomNavigationDrawer::class.java)
+            intent.putExtra("name", userName)
+            startActivity(intent)
+            finish()
+            return
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         }

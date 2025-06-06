@@ -13,9 +13,12 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -23,9 +26,11 @@ import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.ntele.ProfileFragment
 import com.example.ntele.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -56,6 +61,8 @@ class HomeFragment : Fragment() {
     private lateinit var speedInput: TextView
     private lateinit var co2Input: TextView
     private lateinit var distanceInput: TextView
+    private lateinit var profileButton: ShapeableImageView
+    private lateinit var batteryProgressBar: ProgressBar
 
     private lateinit var databaseRef: DatabaseReference
     private var mapImageView: ImageView? = null
@@ -85,22 +92,37 @@ class HomeFragment : Fragment() {
         co2Input = rootView.findViewById(R.id.co2_display_textview)
         distanceInput = rootView.findViewById(R.id.distance_display_textiew)
         nameField = rootView.findViewById(R.id.name_text)
+        profileButton = rootView.findViewById(R.id.profile_image)
+        batteryProgressBar = rootView.findViewById(R.id.battery_progress_bar)
 
         databaseRef = FirebaseDatabase.getInstance("https://telematics-a0e1f-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .reference
 
-        val name = arguments?.getString("name")
-        nameField.text = name ?: "User"
-        Log.d("name","" + name)
+        val sharedName = getUserNameFromPrefs()
+        nameField.text = sharedName
+        Log.d("name","" + sharedName)
 
-        name?.let { loadDataFromFirebase(it) }
+        loadDataFromFirebase(sharedName)
+
+        profileButton.setOnClickListener{
+
+            val fragment = ProfileFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_right
+                )
+                .add(android.R.id.content,fragment)
+                .addToBackStack(null)
+                .commit()
+        }
         
         sosButtonDefault.setOnClickListener {
-            updateSosState(1, name)
+            updateSosState(1, sharedName)
         }
 
         sosButtonSelected.setOnClickListener {
-            updateSosState(0, name)
+            updateSosState(0, sharedName)
         }
 
         immobilizationToggleBtn.isEnabled = false
@@ -110,7 +132,6 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Requires premium subscription", Toast.LENGTH_SHORT).show()
 
         }
-
 
         if (checkLocationPermission()) {
             fetchAndUpdateMap()
@@ -125,6 +146,12 @@ class HomeFragment : Fragment() {
         }
 
         return rootView
+    }
+
+    private fun getUserNameFromPrefs(): String {
+        val preferences = requireActivity().getSharedPreferences("UserSession", AppCompatActivity.MODE_PRIVATE)
+        return preferences.getString("username","User")?: "User"
+
     }
 
     private fun updateSosState(state: Int, name: String?) {
@@ -160,13 +187,24 @@ class HomeFragment : Fragment() {
     private fun loadDataFromFirebase(userName: String) {
         val userRef = databaseRef.child("HomeFragment").child(userName)
 
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                val ctx = context ?: return
+
                 if (snapshot.exists()) {
+
+                    val batteryVal = snapshot.child("battery_level").getValue(Int::class.java)
+                    if(batteryVal != null){
+                        batteryLevel.text = "$batteryVal %"
+                        batteryProgressBar.progress = batteryVal
+                    }else {
+                        batteryLevel.text = "-"
+                        batteryProgressBar.progress = 0
+                    }
                     // Battery Level (e.g., "85 %")
-                    batteryLevel.text = snapshot.child("battery_level").getValue(Int::class.java)?.let {
-                        "$it %"
-                    } ?: "-"
+                    //batteryLevel.text = snapshot.child("battery_level").getValue(Int::class.java)?.let {
+                   //     "$it %"
+                    //} ?: "-"
 
                     // DTE Progress (Distance to Empty) in km (e.g., "120 km")
                     dteProgress.text = snapshot.child("dte_progress").getValue(Int::class.java)?.let {
@@ -223,13 +261,13 @@ class HomeFragment : Fragment() {
                         sosFrame.setBackgroundResource(R.drawable.selected_sos_bg)
                         sosButtonDefault.visibility = View.GONE
                         sosButtonSelected.visibility = View.VISIBLE
-                        val boldTypeface = ResourcesCompat.getFont(requireContext(), R.font.roboto_bold)
+                        val boldTypeface = ResourcesCompat.getFont(ctx, R.font.roboto_bold)
                         sosText.typeface = boldTypeface
                     } else {
                         sosFrame.setBackgroundResource(R.drawable.sos_bg)
                         sosButtonDefault.visibility = View.VISIBLE
                         sosButtonSelected.visibility = View.GONE
-                        val regularTypeface = ResourcesCompat.getFont(requireContext(), R.font.roboto_regular)
+                        val regularTypeface = ResourcesCompat.getFont(ctx, R.font.roboto_regular)
                         sosText.typeface = regularTypeface
                     }
 
@@ -254,17 +292,23 @@ class HomeFragment : Fragment() {
         // Update Firebase on toggle changes
         seatToggleBtn.setOnCheckedChangeListener { _, isChecked ->
             userRef.child("seat_lock").setValue(if (isChecked) 1 else 0)
+            context?.let{
             Toast.makeText(requireContext(), if (isChecked) "Seat Lock Enabled" else "Seat Lock Disabled", Toast.LENGTH_SHORT).show()
+            }
         }
 
         vehicleToggleBtn.setOnCheckedChangeListener { _, isChecked ->
             userRef.child("vehicle_lock").setValue(if (isChecked) 1 else 0)
+            context?.let{
             Toast.makeText(requireContext(), if (isChecked) "Vehicle Lock Enabled" else "Vehicle Lock Disabled", Toast.LENGTH_SHORT).show()
+            }
         }
 
         handleToggleBtn.setOnCheckedChangeListener { _, isChecked ->
             userRef.child("handle_lock").setValue(if (isChecked) 1 else 0)
+            context?.let{
             Toast.makeText(requireContext(), if (isChecked) "Handle Lock Enabled" else "Handle Lock Disabled", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

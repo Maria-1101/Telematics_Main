@@ -137,6 +137,12 @@ class UserDetails : AppCompatActivity() {
             val city = cityEdittext.text.toString().trim()
             val postalCode = postalCodeEdittext.text.toString().trim()
             val gender = genderSpinner.text.toString().trim()
+            val prefs = getSharedPreferences("UserSession", MODE_PRIVATE)
+
+            prefs.edit()
+                .putBoolean("isLoggedIn", true)
+                .putString("userName", name)
+                .apply()
 
             val userData = mapOf(
                 "name" to name,

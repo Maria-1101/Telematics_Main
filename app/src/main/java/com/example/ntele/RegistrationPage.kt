@@ -102,6 +102,10 @@ class RegistrationPage : AppCompatActivity() {
                 val intent = Intent(this, OTPVerificationPage::class.java)
                 intent.putExtra("phoneNumber", phoneNumber)
                 intent.putExtra("source","registration")
+
+                val prefs = getSharedPreferences("UserSession", MODE_PRIVATE)
+                prefs.edit().putBoolean("isLoggedIn", true).apply()
+
                 startActivity(intent)
             },
             Response.ErrorListener { error ->

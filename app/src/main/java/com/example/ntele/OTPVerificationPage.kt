@@ -135,6 +135,13 @@ class OTPVerificationPage : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (child in snapshot.children) {
                     val name = child.child("name").value as? String ?: "User"
+
+                    val preferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+                    preferences.edit()
+                        .putBoolean("isLoggedIn" , true)
+                        .putString("username", name)
+                        .apply()
+
                     val intent = Intent(this@OTPVerificationPage, BottomNavigationDrawer::class.java)
                     intent.putExtra("name", name)
                     Log.d("Mobile name","" + name)

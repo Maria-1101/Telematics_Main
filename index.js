@@ -4,6 +4,9 @@ const cors = require('cors');
 const twilio = require('twilio');
 const SibApiV3Sdk = require('sib-api-v3-sdk'); // Brevo SDK
 
+// Import the thingspeak sync module
+const { startSync } = require('./thingspeak');
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -101,13 +104,14 @@ app.post('/verify-email-otp', (req, res) => {
     }
 });
 
-// ✅ Test
+// ✅ Test route
 app.get('/', (req, res) => {
     res.send('OTP service (Twilio + Brevo) is running!');
 });
 
-// Start server
+// Start server and also start the ThingSpeak sync
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
+    startSync();  // start ThingSpeak => Firebase syncing in the background
 });

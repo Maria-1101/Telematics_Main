@@ -46,6 +46,24 @@
             android:fontFamily="@font/roboto_bold"
             android:textAppearance="@style/header_title"
             android:gravity="center_vertical" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_imgae"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
 
     <LinearLayout
@@ -708,14 +726,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:showText="false"
                             android:padding="8dp"
                             android:rotation="270"
+                            android:showText="false"
                             android:switchMinWidth="0dp"
                             android:switchPadding="0dp"
                             android:thumb="@drawable/switch_thumb"
                             android:track="@drawable/switch_track"
-                            app:useMaterialThemeColors="false" />
+                            app:useMaterialThemeColors="false"
+                            tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
 
@@ -843,17 +862,17 @@
                             android:thumb="@drawable/switch_thumb"
                             android:track="@drawable/switch_track"
                             app:useMaterialThemeColors="false" />
+                     </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
         <View
             android:id="@+id/parameter_view_bg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@drawable/home_page_rectangle" />
-    </FrameLayout>
+        </FrameLayout>
         <FrameLayout
             android:id="@+id/sos_frame"
             android:layout_width="match_parent"
@@ -915,11 +934,18 @@
                     android:src="@drawable/selected_sos"
                     tools:ignore="TouchTargetSizeCheck" />
 
-            </LinearLayout>
-        </FrameLayout>
-
-
-    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/profile_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:elevation="20dp"
+        android:clickable="true"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
