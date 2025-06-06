@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -5,7 +6,7 @@ const twilio = require('twilio');
 const SibApiV3Sdk = require('sib-api-v3-sdk'); // Brevo SDK
 
 // Import the thingspeak sync module
-const { startSync } = require('./thingspeak');
+const { startSync } = require('./thingspeak_firebase');
 
 const app = express();
 app.use(cors());
@@ -76,7 +77,7 @@ app.post('/send-email-otp', async (req, res) => {
 
     const emailData = {
         to: [{ email }],
-        sender: { name: 'Your App', email: senderEmail },
+        sender: { name: 'Supra Teletrack', email: senderEmail },
         subject: 'Your OTP Verification Code',
         textContent: `Your OTP is: ${otp}`,
     };
