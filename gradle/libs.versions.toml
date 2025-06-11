@@ -19,7 +19,7 @@ service = "4.4.2"
 volley = "1.2.1"
 okhttpVersion = "4.11.0"
 firebase = "20.3.0"
-
+mappls = "8.1.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +39,7 @@ serviceLocation = { group = "com.google.android.gms" , name = "play-services-loc
 androidVolley = { group = "com.android.volley" , name = "volley" , version.ref = "volley"}
 okhttpService = { group = "com.squareup.okhttp3" ,  name = "okhttp" , version.ref = "okhttpVersion"}
 firebaseService = { group = "com.google.firebase" , name = "firebase-database" , version.ref = "firebase"}
+mapMyIndia = { group = "com.mappls.sdk", name = "mappls-android-sdk", version.ref = "mappls" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

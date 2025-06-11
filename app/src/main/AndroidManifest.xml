@@ -5,8 +5,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
 
     <application
+        android:name=".NTeleApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -24,12 +29,23 @@
             android:exported="false" />
 
         <meta-data
-            android:name="com.mappls.sdk.maps.ACCESS_TOKEN"
+            android:name="com.mappls.sdk.restapi_key"
             android:value="20b2c7a2d61fa8e3c0f04cc4c3f5cbb3" />
+        <meta-data
+            android:name="com.mapmyindia.sdk.maps_map_sdk_key"
+            android:value="20b2c7a2d61fa8e3c0f04cc4c3f5cbb3" />
+        <meta-data
+            android:name="com.mapmyindia.sdk.atlas_client_id"
+            android:value="96dHZVzsAutlN8qj9sy53VREgcqL_Jay_di_SlZqMU9CrjLwBKi3QXEhvpVYjLVApcz9pgEP3F0oKG6RZPeJpg==" />
+        <meta-data
+            android:name="com.mapmyindia.sdk.atlas_client_secret"
+            android:value="lrFxI-iSEg_-U93zuGixRT6C7rUG8EkIkVqGlKPN-JclhattubOfSgbl1MrbSLNxzpMfghG_-3sEPJp7r_9iMcCeuGUjYucg" />
+
 
         <activity
             android:name=".BottomNavigationDrawer"
-            android:exported="false"></activity>
+            android:exported="false">
+        </activity>
         <activity
             android:name=".AboutVehicle"
             android:exported="false" />

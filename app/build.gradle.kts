@@ -60,5 +60,6 @@ dependencies {
     implementation(libs.androidVolley)
     implementation(libs.okhttpService)
     implementation(libs.firebaseService)
+    implementation(libs.mapMyIndia)
 }
 
