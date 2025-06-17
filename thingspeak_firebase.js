@@ -51,6 +51,10 @@ const fetchAndPush = async () => {
       co2_saved: safeParse(feed.field4),
       battery_level: safeParse(feed.field5),
       dte_progress: safeParse(feed.field6),
+      location: {
+          latitude: safeParse(feed.field7),
+          longitude: safeParse(feed.field8)
+      },
       last_updated: new Date().toISOString()
     };
  
