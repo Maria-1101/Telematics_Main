@@ -90,6 +90,14 @@ const fetchAndPushToThingSpeak = async () => {
       field4: safeParse(vehicle_lock)
     });
 
+   // Log the parameters being sent
+    console.log("📤 Writing to ThingSpeak with params:", {
+      field1: safeParse(handle_lock),
+      field2: safeParse(seat_lock),
+      field3: safeParse(sos),
+      field4: safeParse(vehicle_lock)
+    });
+   
     const response = await axios.post(
       `https://api.thingspeak.com/update`,
       params,
@@ -107,7 +115,8 @@ const fetchAndPushToThingSpeak = async () => {
   }
 };
 function startSync() {
-  setInterval(fetchAndPush, 1000); // or 15000 (15s) for production
+  setInterval(fetchAndPush, 1000); // ThingSpeak → Firebase (every 1s)
+  setInterval(fetchAndPushToThingSpeak, 15000); // Firebase → ThingSpeak (every 15s)
 }
  
 module.exports = { startSync };
