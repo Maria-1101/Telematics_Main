@@ -22,6 +22,14 @@ const safeParse = (value) => {
  
 // ⏰ Cache last ThingSpeak timestamp
 let lastThingSpeakTimestamp = null;
+
+// 🔒 Cache last lock status
+let lastLockStatus = {
+  handle_lock: null,
+  seat_lock: null,
+  sos: null,
+  vehicle_lock: null
+};
  
 const fetchAndPush = async () => {
   try {
@@ -114,9 +122,33 @@ const fetchAndPushToThingSpeak = async () => {
     console.error("❌ Error processing Firebase data:", error.message);
   }
 };
+
+// 🔥 Realtime Firebase listener
+const setupFirebaseListener = () => {
+  db.ref(FIREBASE_PATH).on('value', (snapshot) => {
+    const firebaseData = snapshot.val();
+    if (!firebaseData) return;
+    
+    const { handle_lock, seat_lock, sos, vehicle_lock } = firebaseData;
+    
+    // Only trigger if lock status changed
+    if (
+      handle_lock !== lastLockStatus.handle_lock ||
+      seat_lock !== lastLockStatus.seat_lock ||
+      sos !== lastLockStatus.sos ||
+      vehicle_lock !== lastLockStatus.vehicle_lock
+    ) {
+      console.log("🔔 Lock status changed - triggering ThingSpeak write");
+      lastLockStatus = { handle_lock, seat_lock, sos, vehicle_lock };
+      fetchAndPushToThingSpeak(firebaseData);
+    }
+  });
+};
+
 function startSync() {
   setInterval(fetchAndPush, 1000); // ThingSpeak → Firebase (every 1s)
-  setInterval(fetchAndPushToThingSpeak, 15000); // Firebase → ThingSpeak (every 15s)
+  //setInterval(fetchAndPushToThingSpeak,500); // Firebase → ThingSpeak (every 15s)
+ setupFirebaseListener();
 }
  
 module.exports = { startSync };
