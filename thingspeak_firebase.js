@@ -14,6 +14,7 @@ const READ_CHANNEL_ID = "2979545";
 const THINGSPEAK_WRITE_API_KEY = "E2312877OHC5L9TQ";
 const WRITE_CHANNEL_ID = "2997189";
 const FIREBASE_PATH = "HomeFragment/Anna Maria James";
+const THINGSPEAK_WRITE_DEBOUNCE = 15000; 
  
 const safeParse = (value) => {
   const num = parseFloat(value);
@@ -30,7 +31,9 @@ let lastLockStatus = {
   sos: null,
   vehicle_lock: null
 };
- 
+
+let lastWriteTime = 0;
+
 const fetchAndPush = async () => {
   try {
     const response = await axios.get(
@@ -131,16 +134,25 @@ const setupFirebaseListener = () => {
     
     const { handle_lock, seat_lock, sos, vehicle_lock } = firebaseData;
     
-    // Only trigger if lock status changed
+    // Detect lock changes
     if (
       handle_lock !== lastLockStatus.handle_lock ||
       seat_lock !== lastLockStatus.seat_lock ||
       sos !== lastLockStatus.sos ||
       vehicle_lock !== lastLockStatus.vehicle_lock
     ) {
-      console.log("🔔 Lock status changed - triggering ThingSpeak write");
-      lastLockStatus = { handle_lock, seat_lock, sos, vehicle_lock };
-      fetchAndPushToThingSpeak(firebaseData);
+      const now = Date.now();
+      
+      // Enforce 15s write interval
+      if (now - lastWriteTime >= THINGSPEAK_WRITE_DEBOUNCE) {
+        console.log("🔔 Lock status changed - writing to ThingSpeak");
+        lastLockStatus = { handle_lock, seat_lock, sos, vehicle_lock };
+        lastWriteTime = now;
+        fetchAndPushToThingSpeak(firebaseData);
+      } else {
+        const nextWrite = Math.ceil((THINGSPEAK_WRITE_DEBOUNCE - (now - lastWriteTime))/1000);
+        console.log(`⏳ Change detected (next write in ${nextWrite}s)`);
+      }
     }
   });
 };
