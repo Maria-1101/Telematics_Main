@@ -9,8 +9,10 @@ admin.initializeApp({
  
 const db = admin.database();
  
-const THINGSPEAK_API_KEY = "RFILA6YNLV13M5H7";
-const CHANNEL_ID = "2979545";
+const THINGSPEAK_READ_API_KEY = "RFILA6YNLV13M5H7";
+const READ_CHANNEL_ID = "2979545";
+const THINGSPEAK_WRITE_API_KEY = "E2312877OHC5L9TQ";
+const WRITE_CHANNEL_ID = "2997189";
 const FIREBASE_PATH = "HomeFragment/Anna Maria James";
  
 const safeParse = (value) => {
@@ -24,7 +26,7 @@ let lastThingSpeakTimestamp = null;
 const fetchAndPush = async () => {
   try {
     const response = await axios.get(
-      `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=1`
+      `https://api.thingspeak.com/channels/${READ_CHANNEL_ID}/feeds.json?api_key=${THINGSPEAK_READ_API_KEY}&results=1`
     );
  
     const feed = response.data.feeds[0];
@@ -34,7 +36,7 @@ const fetchAndPush = async () => {
     }
  
     const currentTimestamp = feed.created_at;
- 
+   
     // ✅ Skip if this entry has already been pushed
     if (currentTimestamp === lastThingSpeakTimestamp) {
       console.log("⏸ No new data in ThingSpeak — skipping push to Firebase");
@@ -65,7 +67,45 @@ const fetchAndPush = async () => {
     console.error("❌ Error fetching or pushing data:", error.message);
   }
 };
- 
+
+// 🔄 Fetch from Firebase & push to ThingSpeak
+const fetchAndPushToThingSpeak = async () => {
+  try {
+    const snapshot = await db.ref(FIREBASE_PATH).once('value');
+    const firebaseData = snapshot.val();
+    
+    if (!firebaseData) {
+      console.warn("⚠️ No data found in Firebase");
+      return;
+    }
+
+    // Extract 4 values (modify field names as needed)
+    const { handle_lock, seat_lock, sos ,vehicle_lock } = firebaseData;
+    
+    const params = new URLSearchParams({
+      api_key: THINGSPEAK_WRITE_API_KEY,
+      field1: safeParse(handle_lock),
+      field2: safeParse(seat_lock),
+      field3: safeParse(sos),
+      field4: safeParse(vehicle_lock)
+    });
+
+    const response = await axios.post(
+      `https://api.thingspeak.com/update`,
+      params,
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+    );
+
+    if (response.data > 0) {
+      console.log(`✅ Firebase data pushed to ThingSpeak (Entry ID: ${response.data})`);
+    } else {
+      console.warn("⚠️ ThingSpeak write failed", response.data);
+    }
+
+  } catch (error) {
+    console.error("❌ Error processing Firebase data:", error.message);
+  }
+};
 function startSync() {
   setInterval(fetchAndPush, 1000); // or 15000 (15s) for production
 }
