@@ -14,7 +14,7 @@ const READ_CHANNEL_ID = "2979545";
 const THINGSPEAK_WRITE_API_KEY = "E2312877OHC5L9TQ";
 const WRITE_CHANNEL_ID = "2997189";
 const FIREBASE_PATH = "HomeFragment/Anna Maria James";
-const THINGSPEAK_WRITE_DEBOUNCE = 15000; 
+const THINGSPEAK_WRITE_DEBOUNCE = 1000; 
  
 const safeParse = (value) => {
   const num = parseFloat(value);
