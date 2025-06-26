@@ -106,10 +106,10 @@ const fetchAndPushToThingSpeak = async () => {
     
     const params = new URLSearchParams({
       api_key: THINGSPEAK_WRITE_API_KEY,
-      field1: safeParse(currentLockStatus.handle_lock),
-      field2: safeParse(currentLockStatus.seat_lock),
-      field3: safeParse(currentLockStatus.sos),
-      field4: safeParse(currentLockStatus.vehicle_lock)
+      field1: safeParse(currentLockStatus.seat_lock),
+      field2: safeParse(currentLockStatus.vehicle_lock),
+      field3: safeParse(currentLockStatus.handle_lock),
+      field4: safeParse(currentLockStatus.sos)
     });
     
    console.log("📤 Writing to ThingSpeak with params:", params.toString());
@@ -133,7 +133,7 @@ const fetchAndPushToThingSpeak = async () => {
 
 function startSync() {
   setInterval(fetchAndPush, 1000); // ThingSpeak → Firebase (every 1s)
-  setInterval(fetchAndPushToThingSpeak,500); // Firebase → ThingSpeak (every 15s)
+  setInterval(fetchAndPushToThingSpeak,200); // Firebase → ThingSpeak (every 15s)
 }
  
 module.exports = { startSync };
