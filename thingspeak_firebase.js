@@ -43,6 +43,8 @@ const fetchAndPush = async () => {
       console.warn("⚠️ No data received from ThingSpeak");
       return;
     }
+
+    const currentTimestamp = feed.created_at;
    
     // ✅ Skip if this entry has already been pushed
     if (currentTimestamp === lastThingSpeakTimestamp) {
