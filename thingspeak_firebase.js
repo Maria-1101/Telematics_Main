@@ -32,8 +32,6 @@ let lastLockStatus = {
   vehicle_lock: null
 };
 
-let lastWriteTime = 0;
-
 const fetchAndPush = async () => {
   try {
     const response = await axios.get(
@@ -45,18 +43,15 @@ const fetchAndPush = async () => {
       console.warn("⚠️ No data received from ThingSpeak");
       return;
     }
- 
-    const currentTimestamp = feed.created_at;
    
     // ✅ Skip if this entry has already been pushed
     if (currentTimestamp === lastThingSpeakTimestamp) {
       console.log("⏸ No new data in ThingSpeak — skipping push to Firebase");
       return;
     }
- 
-    // ⏱ Update cache
+
     lastThingSpeakTimestamp = currentTimestamp;
- 
+   
     const data = {
       avg_speed: safeParse(feed.field1),
       mileage: safeParse(feed.field2),
@@ -91,23 +86,31 @@ const fetchAndPushToThingSpeak = async () => {
     }
 
     // Extract 4 values (modify field names as needed)
-    const { handle_lock, seat_lock, sos ,vehicle_lock } = firebaseData;
+ const currentLockStatus = {
+      handle_lock: firebaseData.handle_lock,
+      seat_lock: firebaseData.seat_lock,
+      sos: firebaseData.sos,
+      vehicle_lock: firebaseData.vehicle_lock
+    };
+
+    // Check if lock status has changed
+    if (JSON.stringify(currentLockStatus) === JSON.stringify(lastLockStatus)) {
+      console.log("⏸ Lock status unchanged - skipping ThingSpeak update");
+      return;
+    }
+
+    // Update cache with new values
+    lastLockStatus = currentLockStatus;
     
     const params = new URLSearchParams({
       api_key: THINGSPEAK_WRITE_API_KEY,
-      field1: safeParse(handle_lock),
-      field2: safeParse(seat_lock),
-      field3: safeParse(sos),
-      field4: safeParse(vehicle_lock)
+      field1: safeParse(currentLockStatus.handle_lock),
+      field2: safeParse(currentLockStatus.seat_lock),
+      field3: safeParse(currentLockStatus.sos),
+      field4: safeParse(currentLockStatus.vehicle_lock)
     });
-
-   // Log the parameters being sent
-    console.log("📤 Writing to ThingSpeak with params:", {
-      field1: safeParse(handle_lock),
-      field2: safeParse(seat_lock),
-      field3: safeParse(sos),
-      field4: safeParse(vehicle_lock)
-    });
+    
+   console.log("📤 Writing to ThingSpeak with params:", params.toString());
    
     const response = await axios.post(
       `https://api.thingspeak.com/update`,
@@ -126,41 +129,9 @@ const fetchAndPushToThingSpeak = async () => {
   }
 };
 
-// 🔥 Realtime Firebase listener
-const setupFirebaseListener = () => {
-  db.ref(FIREBASE_PATH).on('value', (snapshot) => {
-    const firebaseData = snapshot.val();
-    if (!firebaseData) return;
-    
-    const { handle_lock, seat_lock, sos, vehicle_lock } = firebaseData;
-    
-    // Detect lock changes
-    if (
-      handle_lock !== lastLockStatus.handle_lock ||
-      seat_lock !== lastLockStatus.seat_lock ||
-      sos !== lastLockStatus.sos ||
-      vehicle_lock !== lastLockStatus.vehicle_lock
-    ) {
-      const now = Date.now();
-      
-      // Enforce 15s write interval
-      if (now - lastWriteTime >= THINGSPEAK_WRITE_DEBOUNCE) {
-        console.log("🔔 Lock status changed - writing to ThingSpeak");
-        lastLockStatus = { handle_lock, seat_lock, sos, vehicle_lock };
-        lastWriteTime = now;
-        fetchAndPushToThingSpeak(firebaseData);
-      } else {
-        const nextWrite = Math.ceil((THINGSPEAK_WRITE_DEBOUNCE - (now - lastWriteTime))/1000);
-        console.log(`⏳ Change detected (next write in ${nextWrite}s)`);
-      }
-    }
-  });
-};
-
 function startSync() {
   setInterval(fetchAndPush, 1000); // ThingSpeak → Firebase (every 1s)
-  //setInterval(fetchAndPushToThingSpeak,500); // Firebase → ThingSpeak (every 15s)
- setupFirebaseListener();
+  setInterval(fetchAndPushToThingSpeak,1000); // Firebase → ThingSpeak (every 15s)
 }
  
 module.exports = { startSync };
