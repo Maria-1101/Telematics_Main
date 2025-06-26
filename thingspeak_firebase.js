@@ -133,7 +133,7 @@ const fetchAndPushToThingSpeak = async () => {
 
 function startSync() {
   setInterval(fetchAndPush, 1000); // ThingSpeak → Firebase (every 1s)
-  setInterval(fetchAndPushToThingSpeak,1000); // Firebase → ThingSpeak (every 15s)
+  setInterval(fetchAndPushToThingSpeak,500); // Firebase → ThingSpeak (every 15s)
 }
  
 module.exports = { startSync };
